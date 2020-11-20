@@ -16,7 +16,7 @@ after_success:
   - docker build -t mdenicore/multi-server ./server
   - docker build -t mdenicore/multi-worker ./worker
   # Log in to the docker CLI
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - echo mdenicore1 | docker login -u dfghHGFD04* --password-stdin
   # Take those images and push them to docker hub
   - docker push mdenicore/multi-client
   - docker push mdenicore/multi-nginx
