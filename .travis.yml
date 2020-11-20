@@ -1,0 +1,24 @@
+sudo: required
+language: generic
+
+services:
+  - docker
+
+before_install:
+  - docker build -t mdenicore/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true mdenicore/react-test npm test
+
+after_success:
+  - docker build -t mdenicore/multi-client ./client
+  - docker build -t mdenicore/multi-nginx ./nginx
+  - docker build -t mdenicore/multi-server ./server
+  - docker build -t mdenicore/multi-worker ./worker
+  # Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push them to docker hub
+  - docker push mdenicore/multi-client
+  - docker push mdenicore/multi-nginx
+  - docker push mdenicore/multi-server
+  - docker push mdenicore/multi-worker
