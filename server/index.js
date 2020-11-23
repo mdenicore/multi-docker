@@ -46,21 +46,27 @@ app.get('/values/all', async (req, res) => {
   res.send(values.rows);
 });
 
+//get value for the fibonanci value from 
 app.get('/values/current', async (req, res) => {
   redisClient.hgetall('values', (err, values) => {
     res.send(values);
   });
 });
 
+//calculate the fibonaci value
 app.post('/values', async (req, res) => {
+  //inded = number submitted from UI
   const index = req.body.index;
 
   if (parseInt(index) > 40) {
     return res.status(422).send('Index too high');
   }
 
+  //insert value into redis (calculates the fibonanaci value)
   redisClient.hset('values', index, 'Nothing yet!');
   redisPublisher.publish('insert', index);
+
+  //insert value into postgres (history of all values)
   pgClient.query('INSERT INTO values(number) VALUES($1)', [index]);
 
   res.send({ working: true });
