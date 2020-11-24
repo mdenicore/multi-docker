@@ -62,7 +62,7 @@ app.post('/values', async (req, res) => {
     return res.status(422).send('Index too high');
   }
 
-  //insert value into redis (calculates the fibonanaci value)
+  //insert value into redis (calculate the fibonanaci value)
   redisClient.hset('values', index, 'Nothing yet!');
   redisPublisher.publish('insert', index);
 
