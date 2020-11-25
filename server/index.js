@@ -46,7 +46,7 @@ app.get('/values/all', async (req, res) => {
   res.send(values.rows);
 });
 
-//get value for the fibonanci value from 
+//get value for the fibonanci value from  redis
 app.get('/values/current', async (req, res) => {
   redisClient.hgetall('values', (err, values) => {
     res.send(values);

@@ -3,7 +3,7 @@ services:
   postgres:
     image: 'postgres:latest'
     environment:
-      - POSTGRES_PASSWORD=postgrespassword
+      - POSTGRES_PASSWORD=postgres_password
   redis:
     image: 'redis:latest'
   nginx:
@@ -29,7 +29,7 @@ services:
       - PGUSER=postgres
       - PGHOST=postgres
       - PGDATABASE=postgres
-      - PGPASSWORD=postgrespassword
+      - PGPASSWORD=postgres_password
       - PGPORT=5432
   client:
     stdin_open: true
@@ -49,3 +49,9 @@ services:
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
+  restservice:
+    build:
+      dockerfile: Dockerfile
+      context: ./restservice
+    ports:
+      - '8080:8080'

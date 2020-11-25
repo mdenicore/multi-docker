@@ -14,6 +14,7 @@ class Fib extends Component {
   }
 
   async fetchValues() {
+    //value is a set of key/value pairs
     const values = await axios.get('/api/values/current');
     this.setState({ values: values.data });
   }
