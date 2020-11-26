@@ -2,17 +2,31 @@
   "AWSEBDockerrunVersion": 2,
   "containerDefinitions": [
     {
+      "name": "nginx",
+      "image": "mdenicore1/multi-nginx",
+      "hostname": "nginx",
+      "essential": true,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 80
+        }
+      ],
+      "links": ["restservice"],
+      "memory": 128
+    },
+    {
       "name": "restservice",
       "image": "mdenicore1/restservice",
       "hostname": "restservice",
-      "essential": false,
+      "essential": true,
+      "memory": 256,
       "portMappings": [
         {
-          "hostPort": 8080,
-          "containerPort": 8080
+          "hostPort": 80,
+          "containerPort": 4080
         }
-      ],      
-      "memory": 128
+      ]
     }
   ]
 }
